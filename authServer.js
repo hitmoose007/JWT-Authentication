@@ -1,4 +1,3 @@
-require('dotenv').config()
 
 const express = require('express')
 const app = express()
@@ -6,9 +5,11 @@ const jwt = require('jsonwebtoken')
 
 app.use(express.json())
 
+
 let refreshTokens = []
 
-app.post('/token', (req, res) => {
+app.get('/token', (req, res) => {
+    console.log('here')
   const refreshToken = req.body.token
   if (refreshToken == null) return res.sendStatus(401)
   if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
@@ -19,14 +20,14 @@ app.post('/token', (req, res) => {
   })
 })
 
-app.delete('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
   refreshTokens = refreshTokens.filter(token => token !== req.body.token)
   res.sendStatus(204)
 })
 
-app.post('/login', (req, res) => {
+app.get('/login', (req, res) => {
   // Authenticate User
-
+console.log('here')
   const username = req.body.username
   const user = { name: username }
 
